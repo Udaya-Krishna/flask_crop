@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Suggestion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+ <!-- Linking the CSS file -->
+</head>
+<body>
+    <h1>Crop Suggestion System</h1>
+    <form id="cropForm">
+        <label for="city">City: </label>
+        <input type="text" id="city" name="city" required oninput="getWeather()"><br><br>
+
+        <label for="nitrogen">Nitrogen (N): </label>
+        <input type="number" id="nitrogen" required><br><br>
+
+        <label for="phosphorus">Phosphorus (P): </label>
+        <input type="number" id="phosphorus" required><br><br>
+
+        <label for="potassium">Potassium (K): </label>
+        <input type="number" id="potassium" required><br><br>
+
+        <label for="temperature">Temperature (°C): </label>
+        <input type="number" id="temperature" required ><br><br>
+
+        <label for="humidity">Humidity (%): </label>
+        <input type="number" id="humidity" required ><br><br>
+
+        <label for="ph">pH Level: </label>
+        <input type="number" id="ph" required><br><br>
+
+        <label for="rainfall">Rainfall (mm): </label>
+        <input type="number" id="rainfall" required><br><br>
+
+        <button type="button" onclick="submitData()">Get Suggestion</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        async function getWeather() {
+            let city = document.getElementById("city").value;
+            if (city.length < 3) return;
+
+            const apiKey = "233a169eca4c3d30d93928de0883ee9a";
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+
+                if (data.main) {
+                    document.getElementById("temperature").value = data.main.temp;
+                    document.getElementById("humidity").value = data.main.humidity;
+                } else {
+                    console.error("City not found");
+                }
+            } catch (error) {
+                console.error("Error fetching weather data:", error);
+            }
+        }
+
+        function submitData() {
+            let data = {
+                city: document.getElementById("city").value,
+                temperature: document.getElementById("temperature").value,
+                humidity: document.getElementById("humidity").value,
+                nitrogen: document.getElementById("nitrogen").value,
+                phosphorus: document.getElementById("phosphorus").value,
+                potassium: document.getElementById("potassium").value,
+                ph: document.getElementById("ph").value,
+                rainfall: document.getElementById("rainfall").value
+            };
+
+            fetch("http://127.0.0.1:5000/predict_crop", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = "Suggested Crop: " + data.suggested_crop;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>

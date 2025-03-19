@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCropx - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to EcoCropx</h1>
+        <p>Your smart crop recommendation system.</p>
+        <form id="cityForm">
+            <label for="city">Enter Your City:</label>
+            <input type="text" id="city" placeholder="e.g., Chennai" required>
+            <button type="button" onclick="goToIndex()">Proceed</button>
+        </form>
+    </div>
+
+    <script>
+        function goToIndex() {
+            let city = document.getElementById("city").value.trim();
+            if (city) {
+                window.location.href = `/index?city=${encodeURIComponent(city)}`;
+            } else {
+                alert("Please enter a city name!");
+            }
+        }
+    </script>
+</body>
+</html>

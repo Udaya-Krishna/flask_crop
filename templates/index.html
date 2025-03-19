@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,41 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crop Suggestion</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
- <!-- Linking the CSS file -->
 </head>
 <body>
-    <h1>Crop Suggestion System</h1>
-    <form id="cropForm">
-        <label for="city">City: </label>
-        <input type="text" id="city" name="city" required oninput="getWeather()"><br><br>
+    <div class="container">
+        <h1>Crop Suggestion</h1>
+        <form id="cropForm">
+            <label for="city" class="full-width">City:</label>
+            <input type="text" id="city" class="full-width" required oninput="getWeather()">
 
-        <label for="nitrogen">Nitrogen (N): </label>
-        <input type="number" id="nitrogen" required><br><br>
+            <label for="nitrogen">Nitrogen (N):</label>
+            <input type="number" id="nitrogen" required>
 
-        <label for="phosphorus">Phosphorus (P): </label>
-        <input type="number" id="phosphorus" required><br><br>
+            <label for="phosphorus">Phosphorus (P):</label>
+            <input type="number" id="phosphorus" required>
 
-        <label for="potassium">Potassium (K): </label>
-        <input type="number" id="potassium" required><br><br>
+            <label for="potassium">Potassium (K):</label>
+            <input type="number" id="potassium" required>
 
-        <label for="temperature">Temperature (°C): </label>
-        <input type="number" id="temperature" required ><br><br>
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" id="temperature" required>
 
-        <label for="humidity">Humidity (%): </label>
-        <input type="number" id="humidity" required ><br><br>
+            <label for="humidity">Humidity (%):</label>
+            <input type="number" id="humidity" required>
 
-        <label for="ph">pH Level: </label>
-        <input type="number" id="ph" required><br><br>
+            <label for="ph">pH Level:</label>
+            <input type="number" id="ph" required>
 
-        <label for="rainfall">Rainfall (mm): </label>
-        <input type="number" id="rainfall" required><br><br>
+            <label for="rainfall">Rainfall (mm):</label>
+            <input type="number" id="rainfall" required>
 
-        <button type="button" onclick="submitData()">Get Suggestion</button>
-    </form>
+            <button type="button" onclick="submitData()">Get Suggestion</button>
+        </form>
 
-    <p id="result"></p>
+        <p id="result"></p>
+    </div>
 
     <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('city')) {
+                document.getElementById("city").value = params.get('city');
+                getWeather();
+            }
+        };
+
         async function getWeather() {
             let city = document.getElementById("city").value;
             if (city.length < 3) return;

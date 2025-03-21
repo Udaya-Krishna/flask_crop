@@ -224,7 +224,7 @@
     
     .button:active {
       transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.34);
     }
     
     .button-container {

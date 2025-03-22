@@ -72,7 +72,8 @@
 
             <div class="contact-form">
                 <h2>Send us a Message</h2>
-                <form id="contactForm">
+                <form action="/send_mail" id="contactForm">
+                   
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" id="name" name="name" required>
@@ -94,6 +95,7 @@
                     </div>
 
                     <button type="submit" class="submit-btn">Send Message</button>
+                    <input type="hidden" name="access_key" value="10845296-8978-4f36-b797-0240e2ac7f9e">
                 </form>
             </div>
         </div>

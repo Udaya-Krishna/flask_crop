@@ -168,6 +168,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #888;
+    object-fit: cover;
 }
 
 .team-info {

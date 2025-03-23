@@ -64,14 +64,15 @@ def predict_crop():
 
         # Create DataFrame with correct feature names
         new_data = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]], columns=feature_names)
+       
 
-        # Predict crop
+    
         predicted_crop = model.predict(new_data)[0]
 
         return jsonify({"suggested_crop": predicted_crop})
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+       return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+   app.run(debug=True)

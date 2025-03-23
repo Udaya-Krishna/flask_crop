@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 import requests
 import json
+from flask_mailman import Mail, EmailMessage
 
 app = Flask(__name__)
 
@@ -16,6 +17,17 @@ with open("feature_names.json", "r") as f:
 # OpenWeather API (Replace with your API key)
 WEATHER_API_KEY = "233a169eca4c3d30d93928de0883ee9a"
 
+# Email Configuration (Replace with your credentials)
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "ashwinnandacool@gmail.com"
+app.config["MAIL_PASSWORD"] = "zotv xwkm fmzy woli"
+app.config["MAIL_DEFAULT_SENDER"] = "ashwinnandacool@gmail.com"
+
+mail = Mail(app)
+mail.init_app(app)
+
 def get_weather(city):
     """Fetch temperature and humidity for a given city using OpenWeather API."""
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API_KEY}&units=metric"
@@ -28,6 +40,7 @@ def get_weather(city):
         return temperature, humidity
     else:
         return None, None
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -35,13 +48,14 @@ def home():
 @app.route('/index')
 def index():
     return render_template('index.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
 
 @app.route("/predict_crop", methods=["POST"])
 def predict_crop():
@@ -65,14 +79,32 @@ def predict_crop():
         # Create DataFrame with correct feature names
         new_data = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]], columns=feature_names)
        
-
-    
         predicted_crop = model.predict(new_data)[0]
 
         return jsonify({"suggested_crop": predicted_crop})
     
     except Exception as e:
        return jsonify({"error": str(e)}), 500
+
+@app.route("/send_mail", methods=["POST"])
+def send_mail():
+    try:
+        name = request.form["name"]
+        recipient_email = request.form["email"]
+        subject = request.form["subject"]
+        message = request.form["message"]
+
+        # Construct email body
+        body = f"Name: {name}\n\nMessage:\n{message}"
+
+        # Send email using Flask-Mailman
+        email = EmailMessage(subject, body, to=[recipient_email])
+        email.send()
+
+        return "Email sent successfully!"
+    
+    except Exception as e:
+        return f"Error: {e}"
 
 if __name__ == "__main__":
    app.run(debug=True)

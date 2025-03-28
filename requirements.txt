@@ -1,0 +1,6 @@
+flask==3.0.2
+joblib==1.3.2
+pandas==2.2.1
+requests==2.31.0
+flask-mailman==1.0.0
+scikit-learn==1.4.1 

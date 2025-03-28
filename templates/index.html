@@ -149,7 +149,9 @@
       
       <div class="result-container" id="resultContainer">
         <div class="result-title">Based on your inputs, we recommend:</div>
-        <div class="result-value" id="result"></div>
+        <div class="recommendations-grid" id="recommendations">
+          <!-- Recommendations will be inserted here -->
+        </div>
       </div>
     </div>
   </div>
@@ -231,8 +233,23 @@
         // Hide loading
         document.getElementById("loading").classList.remove("visible");
         
-        // Show result
-        document.getElementById("result").innerText = data.suggested_crop;
+        // Clear previous recommendations
+        const recommendationsDiv = document.getElementById("recommendations");
+        recommendationsDiv.innerHTML = "";
+        
+        // Add new recommendations
+        data.recommendations.forEach((rec, index) => {
+          const recCard = document.createElement("div");
+          recCard.className = "recommendation-card";
+          recCard.innerHTML = `
+            <div class="rank">#${index + 1}</div>
+            <div class="crop-name">${rec.crop}</div>
+            <div class="probability">${rec.probability}% match</div>
+          `;
+          recommendationsDiv.appendChild(recCard);
+        });
+        
+        // Show result container
         document.getElementById("resultContainer").classList.add("visible");
         
         // Scroll to result

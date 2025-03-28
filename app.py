@@ -4,8 +4,10 @@ import pandas as pd
 import requests
 import json
 from flask_mailman import Mail, EmailMessage
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load the trained model
 model = joblib.load("crop_model.pkl")
@@ -61,30 +63,50 @@ def contact():
 def predict_crop():
     try:
         data = request.json
-        city = data.get("city")
-
-        # Fetch temperature & humidity automatically
-        temperature, humidity = get_weather(city)
-
-        if temperature is None or humidity is None:
-            return jsonify({"error": "Could not fetch weather data for the given city"}), 400
-
-        # Extract other inputs
+        print("Received data:", data)  # Debug log
+        
+        # Extract all inputs directly from the request
         N = float(data.get("nitrogen"))
         P = float(data.get("phosphorus"))
         K = float(data.get("potassium"))
+        temperature = float(data.get("temperature"))
+        humidity = float(data.get("humidity"))
         ph = float(data.get("ph"))
         rainfall = float(data.get("rainfall"))
+
+        print("Processed values:", {
+            "N": N, "P": P, "K": K,
+            "temperature": temperature,
+            "humidity": humidity,
+            "ph": ph,
+            "rainfall": rainfall
+        })  # Debug log
 
         # Create DataFrame with correct feature names
         new_data = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]], columns=feature_names)
        
-        predicted_crop = model.predict(new_data)[0]
+        # Get probability predictions for all classes
+        probabilities = model.predict_proba(new_data)[0]
+        
+        # Get indices of top 3 predictions
+        top_3_indices = probabilities.argsort()[-3:][::-1]
+        
+        # Get the crop names and their probabilities
+        top_3_crops = []
+        for idx in top_3_indices:
+            crop_name = model.classes_[idx]
+            probability = probabilities[idx] * 100  # Convert to percentage
+            top_3_crops.append({
+                "crop": crop_name,
+                "probability": round(probability, 2)
+            })
 
-        return jsonify({"suggested_crop": predicted_crop})
+        print("Top 3 predicted crops:", top_3_crops)  # Debug log
+        return jsonify({"recommendations": top_3_crops})
     
     except Exception as e:
-       return jsonify({"error": str(e)}), 500
+        print("Error occurred:", str(e))  # Debug log
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/send_mail", methods=["POST"])
 def send_mail():

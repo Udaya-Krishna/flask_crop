@@ -1,268 +1,265 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoCropx - Crop Suggestion</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
-</head>
-<body>
-  <div class="app-container">
+{% extends "base.html" %}
+
+{% block title %}EcoCropx - Crop Recommendation{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="app-container">
     <div class="app-header">
-<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-  <path fill="white" d="M216.6 49.9C205.1 38.5 189.5 32 173.3 32C139.4 32 112 59.4 112 93.3l0 4.9c0 12 3.3 23.7 9.4 34l18.8 31.3c1.1 1.8 1.2 3.1 1 4.2c-.2 1.2-.8 2.5-2 3.6s-2.4 1.8-3.6 2c-1 .2-2.4 .1-4.2-1l-31.3-18.8c-10.3-6.2-22-9.4-34-9.4l-4.9 0C27.4 144 0 171.4 0 205.3c0 16.2 6.5 31.8 17.9 43.3l1.2 1.2c3.4 3.4 3.4 9 0 12.4l-1.2 1.2C6.5 274.9 0 290.5 0 306.7C0 340.6 27.4 368 61.3 368l4.9 0c12 0 23.7-3.3 34-9.4l31.3-18.8c1.8-1.1 3.1-1.2 4.2-1c1.2 .2 2.5 .8 3.6 2s1.8 2.4 2 3.6c.2 1 .1 2.4-1 4.2l-18.8 31.3c-6.2 10.3-9.4 22-9.4 34l0 4.9c0 33.8 27.4 61.3 61.3 61.3c16.2 0 31.8-6.5 43.3-17.9l1.2-1.2c3.4-3.4 9-3.4 12.4 0l1.2 1.2c11.5 11.5 27.1 17.9 43.3 17.9c33.8 0 61.3-27.4 61.3-61.3l0-4.9c0-12-3.3-23.7-9.4-34l-18.8-31.3c-1.1-1.8-1.2-3.1-1-4.2c.2-1.2 .8-2.5 2-3.6s2.4-1.8 3.6-2c1-.2 2.4-.1 4.2 1l31.3 18.8c10.3 6.2 22 9.4 34 9.4l4.9 0c33.8 0 61.3-27.4 61.3-61.3c0-16.2-6.5-31.8-17.9-43.3l-1.2-1.2c-3.4-3.4-3.4-9 0-12.4l1.2-1.2c11.5-11.5 17.9-27.1 17.9-43.3c0-33.8-27.4-61.3-61.3-61.3l-4.9 0c-12 0-23.7 3.3-34 9.4l-31.3 18.8c-1.8 1.1-3.1 1.2-4.2 1c-1.2-.2-2.5-.8-3.6-2s-1.8-2.4-2-3.6c-.2-1-.1-2.4 1-4.2l18.8-31.3c6.2-10.3 9.4-22 9.4-34l0-4.9C336 59.4 308.6 32 274.7 32c-16.2 0-31.8 6.5-43.3 17.9l-1.2 1.2c-3.4 3.4-9 3.4-12.4 0l-1.2-1.2z"/>
-</svg>
-      <h1 class="app-title">EcoCropx</h1>
-      <p class="app-subtitle">Get intelligent crop suggestions based on your location and soil data</p>
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path fill="white" d="M216.6 49.9C205.1 38.5 189.5 32 173.3 32C139.4 32 112 59.4 112 93.3l0 4.9c0 12 3.3 23.7 9.4 34l18.8 31.3c1.1 1.8 1.2 3.1 1 4.2c-.2 1.2-.8 2.5-2 3.6s-2.4 1.8-3.6 2c-1 .2-2.4 .1-4.2-1l-31.3-18.8c-10.3-6.2-22-9.4-34-9.4l-4.9 0C27.4 144 0 171.4 0 205.3c0 16.2 6.5 31.8 17.9 43.3l1.2 1.2c3.4 3.4 3.4 9 0 12.4l-1.2 1.2C6.5 274.9 0 290.5 0 306.7C0 340.6 27.4 368 61.3 368l4.9 0c12 0 23.7-3.3 34-9.4l31.3-18.8c1.8-1.1 3.1-1.2 4.2-1c1.2 .2 2.5 .8 3.6 2s1.8 2.4 2 3.6c.2 1 .1 2.4-1 4.2l-18.8 31.3c-6.2 10.3-9.4 22-9.4 34l0 4.9c0 33.8 27.4 61.3 61.3 61.3c16.2 0 31.8-6.5 43.3-17.9l1.2-1.2c3.4-3.4 9-3.4 12.4 0l1.2 1.2c11.5 11.5 27.1 17.9 43.3 17.9c33.8 0 61.3-27.4 61.3-61.3l0-4.9c0-12-3.3-23.7-9.4-34l-18.8-31.3c-1.1-1.8-1.2-3.1-1-4.2c.2-1.2 .8-2.5 2-3.6s2.4-1.8 3.6-2c1-.2 2.4-.1 4.2 1l31.3 18.8c10.3 6.2 22 9.4 34 9.4l4.9 0c33.8 0 61.3-27.4 61.3-61.3c0-16.2-6.5-31.8-17.9-43.3l-1.2-1.2c-3.4-3.4-3.4-9 0-12.4l1.2-1.2c11.5-11.5 17.9-27.1 17.9-43.3c0-33.8-27.4-61.3-61.3-61.3l-4.9 0c-12 0-23.7 3.3-34 9.4l-31.3 18.8c-1.8 1.1-3.1 1.2-4.2 1c-1.2-.2-2.5-.8-3.6-2s-1.8-2.4-2-3.6c-.2-1-.1-2.4 1-4.2l18.8-31.3c6.2-10.3 9.4-22 9.4-34l0-4.9C336 59.4 308.6 32 274.7 32c-16.2 0-31.8 6.5-43.3 17.9l-1.2 1.2c-3.4 3.4-9 3.4-12.4 0l-1.2-1.2z"/>
+        </svg>
+        <h1 class="app-title">EcoCropx</h1>
+        <p class="app-subtitle">Get intelligent crop suggestions based on your location and soil data</p>
     </div>
-    <div class="navbar">
-      <a href="/" class="nav-link">Home</a>
-    </div>
-    
     
     <div class="form-container">
-      <form id="cropForm">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 11C13.1046 11 14 10.1046 14 9C14 7.89543 13.1046 7 12 7C10.8954 7 10 7.89543 10 9C10 10.1046 10.8954 11 12 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+        <form id="cropForm">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 11C13.1046 11 14 10.1046 14 9C14 7.89543 13.1046 7 12 7C10.8954 7 10 7.89543 10 9C10 10.1046 10.8954 11 12 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Location Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group full-width">
+                        <label for="city">City</label>
+                        <div class="input-with-icon">
+                            <span class="input-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <input type="text" id="city" placeholder="Enter your city" required oninput="getWeather()">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 class="card-title">Location Information</h2>
-          </div>
-          <div class="card-body">
-            <div class="form-group full-width">
-              <label for="city">City</label>
-              <div class="input-with-icon">
-                <span class="input-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                <input type="text" id="city" placeholder="Enter your city" required oninput="getWeather()">
-              </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M3 21C3.95728 17.2022 7.29053 14 12 14C16.7095 14 20.0427 17.2022 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Soil Nutrients</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nitrogen">
+                                Nitrogen (N)
+                                <span class="tooltip">
+                                    <span class="tooltip-icon">?</span>
+                                    <span class="tooltip-content">Nitrogen is essential for leaf growth and green coloration in plants.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="nitrogen" placeholder="Enter nitrogen value" min="0" max="140" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phosphorus">
+                                Phosphorus (P)
+                                <span class="tooltip">
+                                    <span class="tooltip-icon">?</span>
+                                    <span class="tooltip-content">Phosphorus promotes root growth and flower/fruit development.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="phosphorus" placeholder="Enter phosphorus value" min="0" max="140" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="potassium">
+                                Potassium (K)
+                                <span class="tooltip">
+                                    <span class="tooltip-icon">?</span>
+                                    <span class="tooltip-content">Potassium helps in overall plant health and disease resistance.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="potassium" placeholder="Enter potassium value" min="0" max="200" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ph">
+                                pH Level
+                                <span class="tooltip">
+                                    <span class="tooltip-icon">?</span>
+                                    <span class="tooltip-content">pH indicates soil acidity/alkalinity. Optimal range is usually 5.5-7.5.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="ph" placeholder="Enter pH value" min="0" max="14" step="0.1" required>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 16.5C8 17.8807 9.11929 19 10.5 19C11.8807 19 13 17.8807 13 16.5C13 15.1193 10.5 12 10.5 12C10.5 12 8 15.1193 8 16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 8C5 9.65685 6.34315 11 8 11C9.65685 11 11 9.65685 11 8C11 6.34315 8 2 8 2C8 2 5 6.34315 5 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 3C12 4.65685 13.3431 6 15 6C16.6569 6 18 4.65685 18 3C18 1.34315 15 -3 15 -3C15 -3 12 1.34315 12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 5)"/>
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Climate Data</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="temperature">Temperature (°C)</label>
+                            <input type="number" id="temperature" placeholder="Average temperature" min="-20" max="50" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="humidity">Humidity (%)</label>
+                            <input type="number" id="humidity" placeholder="Average humidity" min="0" max="100" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="rainfall">Rainfall (mm)</label>
+                            <input type="number" id="rainfall" placeholder="Annual rainfall" min="0" max="5000" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button type="button" class="button" onclick="submitData()">Get Crop Recommendation</button>
+            </div>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing your data...</p>
         </div>
         
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" stroke="currentColor" stroke-width="2"/>
-                <path d="M3 21C3.95728 17.2022 7.29053 14 12 14C16.7095 14 20.0427 17.2022 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">Based on your inputs, we recommend:</div>
+            <div class="recommendations-grid" id="recommendations">
+                <!-- Recommendations will be inserted here -->
             </div>
-            <h2 class="card-title">Soil Nutrients</h2>
-          </div>
-          <div class="card-body">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="nitrogen">
-                  Nitrogen (N)
-                  <span class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-content">Nitrogen is essential for leaf growth and green coloration in plants.</span>
-                  </span>
-                </label>
-                <input type="number" id="nitrogen" placeholder="Enter nitrogen value" min="0" max="140" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="phosphorus">
-                  Phosphorus (P)
-                  <span class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-content">Phosphorus promotes root growth and flower/fruit development.</span>
-                  </span>
-                </label>
-                <input type="number" id="phosphorus" placeholder="Enter phosphorus value" min="0" max="140" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="potassium">
-                  Potassium (K)
-                  <span class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-content">Potassium helps in overall plant health and disease resistance.</span>
-                  </span>
-                </label>
-                <input type="number" id="potassium" placeholder="Enter potassium value" min="0" max="200" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="ph">
-                  pH Level
-                  <span class="tooltip">
-                    <span class="tooltip-icon">?</span>
-                    <span class="tooltip-content">pH indicates soil acidity/alkalinity. Optimal range is usually 5.5-7.5.</span>
-                  </span>
-                </label>
-                <input type="number" id="ph" placeholder="Enter pH value" min="0" max="14" step="0.1" required>
-              </div>
-            </div>
-          </div>
         </div>
-        
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 16.5C8 17.8807 9.11929 19 10.5 19C11.8807 19 13 17.8807 13 16.5C13 15.1193 10.5 12 10.5 12C10.5 12 8 15.1193 8 16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M5 8C5 9.65685 6.34315 11 8 11C9.65685 11 11 9.65685 11 8C11 6.34315 8 2 8 2C8 2 5 6.34315 5 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 3C12 4.65685 13.3431 6 15 6C16.6569 6 18 4.65685 18 3C18 1.34315 15 -3 15 -3C15 -3 12 1.34315 12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 5)"/>
-              </svg>
-            </div>
-            <h2 class="card-title">Climate Data</h2>
-          </div>
-          <div class="card-body">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="temperature">Temperature (°C)</label>
-                <input type="number" id="temperature" placeholder="Average temperature" min="-20" max="50" step="0.1" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="humidity">Humidity (%)</label>
-                <input type="number" id="humidity" placeholder="Average humidity" min="0" max="100" required>
-              </div>
-              
-              <div class="form-group full-width">
-                <label for="rainfall">Rainfall (mm)</label>
-                <input type="number" id="rainfall" placeholder="Annual rainfall" min="0" max="5000" required>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="button-container">
-          <button type="button" class="button" onclick="submitData()">Get Crop Recommendation</button>
-        </div>
-      </form>
-      
-      <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Analyzing your data...</p>
-      </div>
-      
-      <div class="result-container" id="resultContainer">
-        <div class="result-title">Based on your inputs, we recommend:</div>
-        <div class="recommendations-grid" id="recommendations">
-          <!-- Recommendations will be inserted here -->
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <script>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
     window.onload = function() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('city')) {
-        document.getElementById("city").value = params.get('city');
-        getWeather();
-      }
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('city')) {
+            document.getElementById("city").value = params.get('city');
+            getWeather();
+        }
     };
     
     async function getWeather() {
-      let city = document.getElementById("city").value;
-      if (city.length < 3) return;
-      
-      const apiKey = "233a169eca4c3d30d93928de0883ee9a";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-      
-      try {
-        let response = await fetch(url);
-        let data = await response.json();
-        if (data.main) {
-          document.getElementById("temperature").value = data.main.temp;
-          document.getElementById("humidity").value = data.main.humidity;
-        } else {
-          console.error("City not found");
+        let city = document.getElementById("city").value;
+        if (city.length < 3) return;
+        
+        const apiKey = "233a169eca4c3d30d93928de0883ee9a";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+        
+        try {
+            let response = await fetch(url);
+            let data = await response.json();
+            if (data.main) {
+                document.getElementById("temperature").value = data.main.temp;
+                document.getElementById("humidity").value = data.main.humidity;
+            } else {
+                console.error("City not found");
+            }
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      }
     }
     
     function submitData() {
-      // Validate inputs
-      const form = document.getElementById("cropForm");
-      const inputs = form.querySelectorAll("input");
-      let isValid = true;
-      
-      inputs.forEach(input => {
-        if (!input.value) {
-          input.style.borderColor = "var(--error)";
-          isValid = false;
-        } else {
-          input.style.borderColor = "var(--gray-300)";
+        // Validate inputs
+        const form = document.getElementById("cropForm");
+        const inputs = form.querySelectorAll("input");
+        let isValid = true;
+        
+        inputs.forEach(input => {
+            if (!input.value) {
+                input.style.borderColor = "var(--error)";
+                isValid = false;
+            } else {
+                input.style.borderColor = "var(--gray-300)";
+            }
+        });
+        
+        if (!isValid) {
+            alert("Please fill in all required fields.");
+            return;
         }
-      });
-      
-      if (!isValid) {
-        alert("Please fill in all required fields.");
-        return;
-      }
-      
-      // Show loading
-      document.getElementById("loading").classList.add("visible");
-      document.getElementById("resultContainer").classList.remove("visible");
-      
-      let data = {
-        city: document.getElementById("city").value,
-        temperature: document.getElementById("temperature").value,
-        humidity: document.getElementById("humidity").value,
-        nitrogen: document.getElementById("nitrogen").value,
-        phosphorus: document.getElementById("phosphorus").value,
-        potassium: document.getElementById("potassium").value,
-        ph: document.getElementById("ph").value,
-        rainfall: document.getElementById("rainfall").value
-      };
-      
-      fetch("http://127.0.0.1:5000/predict_crop", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Hide loading
-        document.getElementById("loading").classList.remove("visible");
         
-        // Clear previous recommendations
-        const recommendationsDiv = document.getElementById("recommendations");
-        recommendationsDiv.innerHTML = "";
+        // Show loading
+        document.getElementById("loading").classList.add("visible");
+        document.getElementById("resultContainer").classList.remove("visible");
         
-        // Add new recommendations
-        data.recommendations.forEach((rec, index) => {
-          const recCard = document.createElement("div");
-          recCard.className = "recommendation-card";
-          recCard.innerHTML = `
-            <div class="rank">#${index + 1}</div>
-            <div class="crop-name">${rec.crop}</div>
-            <div class="probability">${rec.probability}% match</div>
-          `;
-          recommendationsDiv.appendChild(recCard);
+        let data = {
+            city: document.getElementById("city").value,
+            temperature: document.getElementById("temperature").value,
+            humidity: document.getElementById("humidity").value,
+            nitrogen: document.getElementById("nitrogen").value,
+            phosphorus: document.getElementById("phosphorus").value,
+            potassium: document.getElementById("potassium").value,
+            ph: document.getElementById("ph").value,
+            rainfall: document.getElementById("rainfall").value
+        };
+        
+        fetch("http://127.0.0.1:5000/predict_crop", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading
+            document.getElementById("loading").classList.remove("visible");
+            
+            // Clear previous recommendations
+            const recommendationsDiv = document.getElementById("recommendations");
+            recommendationsDiv.innerHTML = "";
+            
+            // Add new recommendations
+            data.recommendations.forEach((rec, index) => {
+                const recCard = document.createElement("div");
+                recCard.className = "recommendation-card";
+                recCard.innerHTML = `
+                    <div class="rank">#${index + 1}</div>
+                    <div class="crop-name">${rec.crop}</div>
+                    <div class="probability">${rec.probability}% match</div>
+                `;
+                recommendationsDiv.appendChild(recCard);
+            });
+            
+            // Show result container
+            document.getElementById("resultContainer").classList.add("visible");
+            
+            // Scroll to result
+            document.getElementById("resultContainer").scrollIntoView({
+                behavior: 'smooth'
+            });
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("loading").classList.remove("visible");
+            alert("An error occurred. Please try again.");
         });
-        
-        // Show result container
-        document.getElementById("resultContainer").classList.add("visible");
-        
-        // Scroll to result
-        document.getElementById("resultContainer").scrollIntoView({
-          behavior: 'smooth'
-        });
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        document.getElementById("loading").classList.remove("visible");
-        alert("An error occurred. Please try again.");
-      });
     }
-  </script>
-</body>
-</html>
+</script>
+{% endblock %}

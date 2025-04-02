@@ -23,9 +23,9 @@ WEATHER_API_KEY = "233a169eca4c3d30d93928de0883ee9a"
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "ashwinnandacool@gmail.com"
-app.config["MAIL_PASSWORD"] = "zotv xwkm fmzy woli"
-app.config["MAIL_DEFAULT_SENDER"] = "ashwinnandacool@gmail.com"
+app.config["MAIL_USERNAME"] = "ecocropx@gmail.com"  # Replace with your Gmail address
+app.config["MAIL_PASSWORD"] = "uytq kttf nvoh bbir"      # Replace with your App Password
+app.config["MAIL_DEFAULT_SENDER"] = "ecocropx@gmail.com"  # Replace with your Gmail address
 
 mail = Mail(app)
 

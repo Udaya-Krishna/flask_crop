@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 import requests
 import json
-from flask_mailman import Mail, EmailMessage
+from flask_mail import Mail, Message
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -28,7 +28,6 @@ app.config["MAIL_PASSWORD"] = "zotv xwkm fmzy woli"
 app.config["MAIL_DEFAULT_SENDER"] = "ashwinnandacool@gmail.com"
 
 mail = Mail(app)
-mail.init_app(app)
 
 def get_weather(city):
     """Fetch temperature and humidity for a given city using OpenWeather API."""
@@ -65,6 +64,12 @@ def predict_crop():
         data = request.json
         print("Received data:", data)  # Debug log
         
+        # Validate input data
+        required_fields = ["nitrogen", "phosphorus", "potassium", "temperature", "humidity", "ph", "rainfall"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
+            
         # Extract all inputs directly from the request
         N = float(data.get("nitrogen"))
         P = float(data.get("phosphorus"))
@@ -104,9 +109,15 @@ def predict_crop():
         print("Top 3 predicted crops:", top_3_crops)  # Debug log
         return jsonify({"recommendations": top_3_crops})
     
+    except ValueError as ve:
+        print("Value Error:", str(ve))  # Debug log
+        return jsonify({"error": "Invalid input values. Please check your input data."}), 400
     except Exception as e:
         print("Error occurred:", str(e))  # Debug log
-        return jsonify({"error": str(e)}), 500
+        print("Error type:", type(e).__name__)  # Debug log
+        import traceback
+        print("Traceback:", traceback.format_exc())  # Debug log
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @app.route("/send_mail", methods=["POST"])
 def send_mail():
@@ -119,9 +130,10 @@ def send_mail():
         # Construct email body
         body = f"Name: {name}\n\nMessage:\n{message}"
 
-        # Send email using Flask-Mailman
-        email = EmailMessage(subject, body, to=[recipient_email])
-        email.send()
+        # Send email using Flask-Mail
+        msg = Message(subject, recipients=[recipient_email])
+        msg.body = body
+        mail.send(msg)
 
         return "Email sent successfully!"
     

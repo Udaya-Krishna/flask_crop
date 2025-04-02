@@ -219,7 +219,7 @@
             rainfall: document.getElementById("rainfall").value
         };
         
-        fetch("http://127.0.0.1:5000/predict_crop", {
+        fetch("/predict_crop", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

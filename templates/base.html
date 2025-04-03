@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoCropx{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-gradient-2"></div>
+    
+    <div class="container">
+        <header>
+            <a href="/">
+                <div class="logo">
+                    <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#00c853" opacity="0.2"/>
+                        <path d="M22 10c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11z" fill="#00c853" opacity="0.4"/>
+                        <path d="M24 15c-3.314 0-6 2.686-6 6s2.686 6 6 6 6-2.686 6-6-2.686-6-6-6z" fill="#00c853" opacity="0.7"/>
+                        <path d="M26 20c0 1.105-0.895 2-2 2s-2-0.895-2-2 0.895-2 2-2 2 0.895 2 2z" fill="#00c853"/>
+                    </svg>
+                    <span class="logo-text">EcoCropx</span>
+                </div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="/" {% if request.endpoint == 'home' %}class="active"{% endif %}>Home</a></li>
+                    <li><a href="/index" {% if request.endpoint == 'index' %}class="active"{% endif %}>Crop Recommendation</a></li>
+                    <li><a href="/about" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
+                    <li><a href="/contact" {% if request.endpoint == 'contact' %}class="active"{% endif %}>Contact</a></li>
+                </ul>
+                <div class="mobile-menu">☰</div>
+            </nav>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About EcoCropx</h3>
+                    <p>EcoCropx is an AI-powered crop recommendation system that helps farmers make data-driven decisions for optimal crop selection.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/index">Crop Recommendation</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@ecocropx.com</p>
+                    <p>Phone: +1 234 567 890</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EcoCropx. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

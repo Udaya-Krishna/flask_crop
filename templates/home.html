@@ -1,103 +1,138 @@
-{% extends "base.html" %}
-
-{% block title %}EcoCropx - AI-Powered Crop Recommendations{% endblock %}
-
-{% block content %}
-<section class="hero">
-    <div class="hero-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCropx - AI-Powered Crop Recommendations</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="bg-gradient"></div>
+  <div class="bg-gradient-2"></div>
+  
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40">
+          <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#00c853" opacity="0.2"/>
+          <path d="M22 10c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11z" fill="#00c853" opacity="0.4"/>
+          <path d="M24 15c-3.314 0-6 2.686-6 6s2.686 6 6 6 6-2.686 6-6-2.686-6-6-6z" fill="#00c853" opacity="0.7"/>
+          <path d="M26 20c0 1.105-0.895 2-2 2s-2-0.895-2-2 0.895-2 2-2 2 0.895 2 2z" fill="#00c853"/>
+        </svg>
+        <span class="logo-text">EcoCropx</span>
+      </div>
+      
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/index">Crop Recommendation</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu">☰</div>
+      </nav>
+    </header>
+    
+    <section class="hero">
+      <div class="hero-content">
         <h1>Grow <span>Smarter</span>,<br />Not Harder</h1>
         <p class="tagline">EcoCropx uses advanced AI algorithms and climate data to recommend the perfect crops for your specific location and conditions, increasing yields by up to 40%.</p>
         
         <div class="stats">
-            <div class="stat">
-                <div class="stat-number">40%</div>
-                <div class="stat-label">Yield Increase</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">5K+</div>
-                <div class="stat-label">Farmers Using</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">Accuracy</div>
-            </div>
+          <div class="stat">
+            <div class="stat-number">40%</div>
+            <div class="stat-label">Yield Increase</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">5K+</div>
+            <div class="stat-label">Farmers Using</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
         </div>
-    </div>
+      </div>
+      
+      <div class="hero-image">
+        <div class="floating-image">
+          <img src="/static/home1.jpg" alt="Crop field" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <div class="floating-image">
+          <img src="/static/home2.jpg" alt="Data visualization" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <div class="floating-image">
+          <img src="/static/home3.jpg" alt="Smart farming" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+    </section>
     
-    <div class="hero-image">
-        <div class="floating-image">
-            <img src="/static/home1.jpg" alt="Crop field" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-        <div class="floating-image">
-            <img src="/static/home2.jpg" alt="Data visualization" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-        <div class="floating-image">
-            <img src="/static/home3.jpg" alt="Smart farming" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-    </div>
-</section>
-
-<section class="features">
-    <div class="features-grid">
+    <section class="features">
+      <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00c853" stroke-width="2"/>
-                    <path d="M12 6V12L16 14" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <h3 class="feature-title">Real-Time Climate Data</h3>
-            <p class="feature-desc">Access up-to-date climate information specific to your location for precise crop selection.</p>
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00c853" stroke-width="2"/>
+              <path d="M12 6V12L16 14" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Real-Time Climate Data</h3>
+          <p class="feature-desc">Access up-to-date climate information specific to your location for precise crop selection.</p>
         </div>
         
         <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 7L13 15L9 11L3 17" stroke="#00c853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M21 13V7H15" stroke="#00c853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h3 class="feature-title">Yield Prediction</h3>
-            <p class="feature-desc">AI-powered algorithms accurately predict your potential harvest based on historical data.</p>
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M21 7L13 15L9 11L3 17" stroke="#00c853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 13V7H15" stroke="#00c853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Yield Prediction</h3>
+          <p class="feature-desc">AI-powered algorithms accurately predict your potential harvest based on historical data.</p>
         </div>
         
         <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00c853" stroke-width="2"/>
-                    <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M9 9H9.01" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M15 9H15.01" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <h3 class="feature-title">Personalized Dashboard</h3>
-            <p class="feature-desc">Track your crops' performance and receive customized recommendations in one place.</p>
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00c853" stroke-width="2"/>
+              <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
+              <path d="M9 9H9.01" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
+              <path d="M15 9H15.01" stroke="#00c853" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Personalized Dashboard</h3>
+          <p class="feature-desc">Track your crops' performance and receive customized recommendations in one place.</p>
         </div>
-    </div>
-</section>
-
-<section class="location-form">
-    <h2 class="form-title">Get Your Personalized Crop Plan</h2>
-    <p class="form-subtitle">Enter your location to receive tailored recommendations for maximum yields</p>
+      </div>
+    </section>
     
-    <form id="cityForm">
+    <section class="location-form">
+      <h2 class="form-title">Get Your Personalized Crop Plan</h2>
+      <p class="form-subtitle">Enter your location to receive tailored recommendations for maximum yields</p>
+      
+      <form id="cityForm">
         <div class="input-group">
-            <input type="text" id="city" placeholder="Enter your city (e.g., Chennai)" required>
+          <input type="text" id="city" placeholder="Enter your city (e.g., Chennai)" required>
         </div>
         <button type="button" onclick="goToIndex()">Generate My Crop Plan</button>
-    </form>
-</section>
-{% endblock %}
+      </form>
+    </section>
+    
+    <footer class="footer">
+      <p>© 2025 EcoCropx | Precision Agriculture Technology</p>
+    </footer>
+  </div>
 
-{% block scripts %}
-<script>
+  <script>
     function goToIndex() {
-        let city = document.getElementById("city").value.trim();
-        if (city) {
-            window.location.href = `/index?city=${encodeURIComponent(city)}`;
-        } else {
-            alert("Please enter your city to continue!");
-        }
+      let city = document.getElementById("city").value.trim();
+      if (city) {
+        window.location.href = `/index?city=${encodeURIComponent(city)}`;
+      } else {
+        alert("Please enter your city to continue!");
+      }
     }
-</script>
-{% endblock %}
+  </script>
+</body>
+</html>

@@ -314,7 +314,7 @@
 }
 
 .btn:hover {
-    background-color: var(--secondary-color);
+    background-color: #1de9b6;
 }
 
 .centered-btn {

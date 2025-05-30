@@ -397,6 +397,10 @@
   }
   
   @media (max-width: 768px) {
+
+    .hero-image{
+      display: none;
+    }
     .nav-items ul {
       display: none;
       flex-direction: column;
@@ -430,6 +434,9 @@
 
     }
 
+    .features-grid{
+      grid-template-columns: 1fr;
+    }
 
     .mobile-menu:hover{
       cursor: pointer;

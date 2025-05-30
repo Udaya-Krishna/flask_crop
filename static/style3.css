@@ -88,22 +88,7 @@
     display: none;
   }
   
-  @media (max-width: 768px) {
-    nav ul {
-      display: none;
-    }
-    
-    .mobile-menu {
-      display: block;
-      font-size: 1.5rem;
-    }
-  }
 
-
-
-
-  
-  
   header {
     padding: 30px 0;
     display: flex;
@@ -368,24 +353,4 @@ footer {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #444;
-}
-
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    nav ul {
-        margin-top: 20px;
-        justify-content: center;
-    }
-    
-    .hero h1 {
-        font-size: 32px;
-    }
-    
-    .cards, .team {
-        grid-template-columns: 1fr;
-    }
 }

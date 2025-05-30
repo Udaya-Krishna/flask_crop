@@ -27,16 +27,19 @@
       </div>
       
       <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/index">Crop Recommendation</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-        <div class="mobile-menu">☰</div>
-      </nav>
-    </header>
+        <div class="nav-items">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/index">Crop Recommendation</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
 
+        <div class="mobile-menu">&#9776;</div>
+      </nav>
+    
+    </header>
     <div class="middle-section">
         <div id="alert-container"></div>
         
@@ -149,6 +152,37 @@
         document.querySelector('.mobile-menu').addEventListener('click', function() {
             document.querySelector('nav ul').classList.toggle('show');
         });
+
+
+
+
+
+        const hamburger = document.querySelector('.mobile-menu');
+    const navItems = document.querySelector('.nav-items');
+    const overlay = document.getElementById('overlay');
+    hamburger.addEventListener('click', () => {
+      navItems.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      overlay.classList.toggle('active');
+    
+
+      if( navItems.classList.contains('active')) {
+        hamburger.innerHTML = '&#10005;'; // Change to close icon
+      } else {
+        hamburger.innerHTML = '&#9776;'; // Change back to menu icon
+      }
+    });
+
+    overlay.addEventListener('click', () => {
+      navItems.classList.remove('active');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('active');
+      hamburger.innerHTML = '&#9776;'; // Change back to menu icon
+    });
+
+
+
+
     </script>
 </body>
 </html>

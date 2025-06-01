@@ -242,6 +242,14 @@
                 alert("Please fill in all required fields.");
                 return;
             }
+
+            let phVal=parseFloat(document.getElementById("ph").value);
+            console.log(phVal);
+            if(phVal<0|| phVal>14){
+                console.log("Invalid pH value");
+                alert("Please enter a valid pH value between 0 and 14.");
+                return;
+            }
             
             // Show loading
             document.getElementById("loading").classList.add("visible");

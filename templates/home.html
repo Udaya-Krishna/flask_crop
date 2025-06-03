@@ -12,8 +12,11 @@
   <div class="bg-gradient-2"></div>
   
   <div class="container">
+    
+
+
     <header>
-      <div class="logo">
+      <div class="logo" onclick="window.location.href='/'">
         <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40">
           <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#00c853" opacity="0.2"/>
           <path d="M22 10c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11z" fill="#00c853" opacity="0.4"/>
@@ -24,15 +27,21 @@
       </div>
       
       <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/index">Crop Recommendation</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-        <div class="mobile-menu">☰</div>
+        <div class="nav-items">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/index">Crop Recommendation</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="mobile-menu">&#9776;</div>
       </nav>
+    
     </header>
+    
+    
     
     <section class="hero">
       <div class="hero-content">
@@ -124,6 +133,8 @@
     </footer>
   </div>
 
+  <div class="overlay" id="overlay"></div>
+
   <script>
     function goToIndex() {
       let city = document.getElementById("city").value.trim();
@@ -133,6 +144,30 @@
         alert("Please enter your city to continue!");
       }
     }
+
+
+    const hamburger = document.querySelector('.mobile-menu');
+    const navItems = document.querySelector('.nav-items');
+    const overlay = document.getElementById('overlay');
+    hamburger.addEventListener('click', () => {
+      navItems.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      overlay.classList.toggle('active');
+    
+
+      if( navItems.classList.contains('active')) {
+        hamburger.innerHTML = '&#10005;'; // Change to close icon
+      } else {
+        hamburger.innerHTML = '&#9776;'; // Change back to menu icon
+      }
+    });
+
+    overlay.addEventListener('click', () => {
+      navItems.classList.remove('active');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('active');
+      hamburger.innerHTML = '&#9776;'; // Change back to menu icon
+    });
   </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 import requests
 import json
+import threading
 from flask_mail import Mail, Message
 from flask_cors import CORS
 
@@ -120,6 +121,9 @@ def predict_crop():
         import traceback
         print("Traceback:", traceback.format_exc())  # Debug log
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
 
 @app.route("/send-mail", methods=["POST"])
 def sendMail():
@@ -129,18 +133,23 @@ def sendMail():
     message = request.form.get('message')
 
     if not name or not subject or not message or not email:
-        flash('All the fields are required!', 'error')
-        return redirect('/')
+        flash('All fields are required!', 'error')
+        return redirect('/contact')
 
-    msg = Message(subject=f"New Contact Message from {name}",
-                  recipients=[app.config['MAIL_USERNAME']])
-    msg.body = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage:\n{message}"
-    
+    msg = Message(
+        subject=f"New Message from {name}",
+        sender=email,
+        recipients=[app.config['MAIL_USERNAME']],
+        body=f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage:\n{message}"
+    )
+
     try:
-        mail.send(msg)
-        flash('Email sent successfully!', 'success')
+        # Send email in a separate thread
+        thread = threading.Thread(target=send_async_email, args=(app, msg))
+        thread.start()
+        flash('Email is being sent in the background!', 'success')
     except Exception as e:
-        flash(f'Error sending email: {e}', 'error')
+        flash(f'Error sending email: {str(e)}', 'error')
 
     return redirect('/contact')
 

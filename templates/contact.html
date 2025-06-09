@@ -180,6 +180,25 @@
             alertContainer.innerHTML = '';
           }, 5000);
         });
+        // Mobile menu toggle
+  const hamburger = document.querySelector('.mobile-menu');
+  const navItems = document.querySelector('.nav-items');
+  const overlay = document.getElementById('overlay');
+
+  hamburger.addEventListener('click', () => {
+    navItems.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    overlay.classList.toggle('active');
+
+    hamburger.innerHTML = navItems.classList.contains('active') ? '&#10005;' : '&#9776;';
+  });
+
+  overlay.addEventListener('click', () => {
+    navItems.classList.remove('active');
+    hamburger.classList.remove('active');
+    overlay.classList.remove('active');
+    hamburger.innerHTML = '&#9776;';
+  });
       </script>
 </body>
 </html>

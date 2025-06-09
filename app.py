@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, jsonify, render_template, flash , redirect, request
 import joblib
 import pandas as pd
 import requests
@@ -19,13 +19,15 @@ with open("feature_names.json", "r") as f:
 # OpenWeather API (Replace with your API key)
 WEATHER_API_KEY = "233a169eca4c3d30d93928de0883ee9a"
 
-# Email Configuration (Replace with your credentials)
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "ecocropx@gmail.com"  # Replace with your Gmail address
-app.config["MAIL_PASSWORD"] = "uytq kttf nvoh bbir"      # Replace with your App Password
-app.config["MAIL_DEFAULT_SENDER"] = "ecocropx@gmail.com"  # Replace with your Gmail address
+app.secret_key = 'your_secret_key'
+
+# Mail config
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'ecocropx2025@gmail.com'
+app.config['MAIL_PASSWORD'] = 'jtif pkqr hwjb ryrr'
+app.config['MAIL_DEFAULT_SENDER'] = 'ecocropx2025@gmail.com'
 
 mail = Mail(app)
 
@@ -119,26 +121,28 @@ def predict_crop():
         print("Traceback:", traceback.format_exc())  # Debug log
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-@app.route("/send_mail", methods=["POST"])
-def send_mail():
-    try:
-        name = request.form["name"]
-        recipient_email = request.form["email"]
-        subject = request.form["subject"]
-        message = request.form["message"]
+@app.route("/send-mail", methods=["POST"])
+def sendMail():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    subject = request.form.get('subject')
+    message = request.form.get('message')
 
-        # Construct email body
-        body = f"Name: {name}\n\nMessage:\n{message}"
+    if not name or not subject or not message or not email:
+        flash('All the fields are required!', 'error')
+        return redirect('/')
 
-        # Send email using Flask-Mail
-        msg = Message(subject, recipients=[recipient_email])
-        msg.body = body
-        mail.send(msg)
-
-        return "Email sent successfully!"
+    msg = Message(subject=f"New Contact Message from {name}",
+                  recipients=[app.config['MAIL_USERNAME']])
+    msg.body = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage:\n{message}"
     
+    try:
+        mail.send(msg)
+        flash('Email sent successfully!', 'success')
     except Exception as e:
-        return f"Error: {e}"
+        flash(f'Error sending email: {e}', 'error')
+
+    return redirect('/contact')
 
 if __name__ == "__main__":
    app.run(debug=True)

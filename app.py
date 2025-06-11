@@ -121,6 +121,7 @@ def predict_crop():
         import traceback
         print("Traceback:", traceback.format_exc())  # Debug log
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    
 def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
